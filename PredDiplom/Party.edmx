@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PartyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aktivnosti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Aktivnosti_Meropriyatiya">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id_Aktivnosti" Type="int" Nullable="false" />
+          <Property Name="Id_Meropriyatiya" Type="int" Nullable="false" />
+          <Property Name="Day_proved" Type="int" Nullable="false" />
+          <Property Name="Time_nach" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Id_User_Moder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Merop_Guri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id_Meropriyatiya" Type="int" Nullable="false" />
+          <Property Name="Id_Aktivnosti" Type="int" Nullable="false" />
+          <Property Name="Id_User_Guri" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Meropriyatiya">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Days" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Mail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="Pol" Type="int" />
+        </EntityType>
+        <Association Name="FK_Aktivnosti_Meropriyatiya_Aktivnosti">
+          <End Role="Aktivnosti" Type="Self.Aktivnosti" Multiplicity="1" />
+          <End Role="Aktivnosti_Meropriyatiya" Type="Self.Aktivnosti_Meropriyatiya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aktivnosti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aktivnosti_Meropriyatiya">
+              <PropertyRef Name="Id_Aktivnosti" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aktivnosti_Meropriyatiya_Meropriyatiya">
+          <End Role="Meropriyatiya" Type="Self.Meropriyatiya" Multiplicity="1" />
+          <End Role="Aktivnosti_Meropriyatiya" Type="Self.Aktivnosti_Meropriyatiya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meropriyatiya">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aktivnosti_Meropriyatiya">
+              <PropertyRef Name="Id_Meropriyatiya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Merop_Guri_Aktivnosti">
+          <End Role="Aktivnosti" Type="Self.Aktivnosti" Multiplicity="1" />
+          <End Role="Merop_Guri" Type="Self.Merop_Guri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aktivnosti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Merop_Guri">
+              <PropertyRef Name="Id_Aktivnosti" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Merop_Guri_Meropriyatiya">
+          <End Role="Meropriyatiya" Type="Self.Meropriyatiya" Multiplicity="1" />
+          <End Role="Merop_Guri" Type="Self.Merop_Guri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meropriyatiya">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Merop_Guri">
+              <PropertyRef Name="Id_Meropriyatiya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Merop_Guri_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Merop_Guri" Type="Self.Merop_Guri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Merop_Guri">
+              <PropertyRef Name="Id_User_Guri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Pol">
+          <End Role="Pol" Type="Self.Pol" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Pol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PartyModelContainer">
+          <EntitySet Name="Aktivnosti" EntityType="Self.Aktivnosti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Aktivnosti_Meropriyatiya" EntityType="Self.Aktivnosti_Meropriyatiya" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Merop_Guri" EntityType="Self.Merop_Guri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meropriyatiya" EntityType="Self.Meropriyatiya" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pol" EntityType="Self.Pol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Aktivnosti_Meropriyatiya_Aktivnosti" Association="Self.FK_Aktivnosti_Meropriyatiya_Aktivnosti">
+            <End Role="Aktivnosti" EntitySet="Aktivnosti" />
+            <End Role="Aktivnosti_Meropriyatiya" EntitySet="Aktivnosti_Meropriyatiya" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aktivnosti_Meropriyatiya_Meropriyatiya" Association="Self.FK_Aktivnosti_Meropriyatiya_Meropriyatiya">
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+            <End Role="Aktivnosti_Meropriyatiya" EntitySet="Aktivnosti_Meropriyatiya" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Merop_Guri_Aktivnosti" Association="Self.FK_Merop_Guri_Aktivnosti">
+            <End Role="Aktivnosti" EntitySet="Aktivnosti" />
+            <End Role="Merop_Guri" EntitySet="Merop_Guri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Merop_Guri_Meropriyatiya" Association="Self.FK_Merop_Guri_Meropriyatiya">
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+            <End Role="Merop_Guri" EntitySet="Merop_Guri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Merop_Guri_User" Association="Self.FK_Merop_Guri_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Merop_Guri" EntitySet="Merop_Guri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Pol" Association="Self.FK_User_Pol">
+            <End Role="Pol" EntitySet="Pol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PartyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aktivnosti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Aktivnosti_Meropriyatiya" Relationship="Self.FK_Aktivnosti_Meropriyatiya_Aktivnosti" FromRole="Aktivnosti" ToRole="Aktivnosti_Meropriyatiya" />
+          <NavigationProperty Name="Merop_Guri" Relationship="Self.FK_Merop_Guri_Aktivnosti" FromRole="Aktivnosti" ToRole="Merop_Guri" />
+        </EntityType>
+        <EntityType Name="Aktivnosti_Meropriyatiya">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Aktivnosti" Type="Int32" Nullable="false" />
+          <Property Name="Id_Meropriyatiya" Type="Int32" Nullable="false" />
+          <Property Name="Day_proved" Type="Int32" Nullable="false" />
+          <Property Name="Time_nach" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Id_User_Moder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aktivnosti" Relationship="Self.FK_Aktivnosti_Meropriyatiya_Aktivnosti" FromRole="Aktivnosti_Meropriyatiya" ToRole="Aktivnosti" />
+          <NavigationProperty Name="Meropriyatiya" Relationship="Self.FK_Aktivnosti_Meropriyatiya_Meropriyatiya" FromRole="Aktivnosti_Meropriyatiya" ToRole="Meropriyatiya" />
+        </EntityType>
+        <EntityType Name="Merop_Guri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Meropriyatiya" Type="Int32" Nullable="false" />
+          <Property Name="Id_Aktivnosti" Type="Int32" Nullable="false" />
+          <Property Name="Id_User_Guri" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aktivnosti" Relationship="Self.FK_Merop_Guri_Aktivnosti" FromRole="Merop_Guri" ToRole="Aktivnosti" />
+          <NavigationProperty Name="Meropriyatiya" Relationship="Self.FK_Merop_Guri_Meropriyatiya" FromRole="Merop_Guri" ToRole="Meropriyatiya" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Merop_Guri_User" FromRole="Merop_Guri" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Meropriyatiya">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Days" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aktivnosti_Meropriyatiya" Relationship="Self.FK_Aktivnosti_Meropriyatiya_Meropriyatiya" FromRole="Meropriyatiya" ToRole="Aktivnosti_Meropriyatiya" />
+          <NavigationProperty Name="Merop_Guri" Relationship="Self.FK_Merop_Guri_Meropriyatiya" FromRole="Meropriyatiya" ToRole="Merop_Guri" />
+        </EntityType>
+        <EntityType Name="Pol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Pol" FromRole="Pol" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="Pol" Type="Int32" />
+          <NavigationProperty Name="Merop_Guri" Relationship="Self.FK_Merop_Guri_User" FromRole="User" ToRole="Merop_Guri" />
+          <NavigationProperty Name="Pol1" Relationship="Self.FK_User_Pol" FromRole="User" ToRole="Pol" />
+          <NavigationProperty Name="Role1" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Aktivnosti_Meropriyatiya_Aktivnosti">
+          <End Role="Aktivnosti" Type="Self.Aktivnosti" Multiplicity="1" />
+          <End Role="Aktivnosti_Meropriyatiya" Type="Self.Aktivnosti_Meropriyatiya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aktivnosti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aktivnosti_Meropriyatiya">
+              <PropertyRef Name="Id_Aktivnosti" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Merop_Guri_Aktivnosti">
+          <End Role="Aktivnosti" Type="Self.Aktivnosti" Multiplicity="1" />
+          <End Role="Merop_Guri" Type="Self.Merop_Guri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aktivnosti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Merop_Guri">
+              <PropertyRef Name="Id_Aktivnosti" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aktivnosti_Meropriyatiya_Meropriyatiya">
+          <End Role="Meropriyatiya" Type="Self.Meropriyatiya" Multiplicity="1" />
+          <End Role="Aktivnosti_Meropriyatiya" Type="Self.Aktivnosti_Meropriyatiya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meropriyatiya">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aktivnosti_Meropriyatiya">
+              <PropertyRef Name="Id_Meropriyatiya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Merop_Guri_Meropriyatiya">
+          <End Role="Meropriyatiya" Type="Self.Meropriyatiya" Multiplicity="1" />
+          <End Role="Merop_Guri" Type="Self.Merop_Guri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meropriyatiya">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Merop_Guri">
+              <PropertyRef Name="Id_Meropriyatiya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Merop_Guri_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Merop_Guri" Type="Self.Merop_Guri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Merop_Guri">
+              <PropertyRef Name="Id_User_Guri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Pol">
+          <End Role="Pol" Type="Self.Pol" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Pol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PartyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aktivnosti" EntityType="Self.Aktivnosti" />
+          <EntitySet Name="Aktivnosti_Meropriyatiya" EntityType="Self.Aktivnosti_Meropriyatiya" />
+          <EntitySet Name="Merop_Guri" EntityType="Self.Merop_Guri" />
+          <EntitySet Name="Meropriyatiya" EntityType="Self.Meropriyatiya" />
+          <EntitySet Name="Pol" EntityType="Self.Pol" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Aktivnosti_Meropriyatiya_Aktivnosti" Association="Self.FK_Aktivnosti_Meropriyatiya_Aktivnosti">
+            <End Role="Aktivnosti" EntitySet="Aktivnosti" />
+            <End Role="Aktivnosti_Meropriyatiya" EntitySet="Aktivnosti_Meropriyatiya" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Merop_Guri_Aktivnosti" Association="Self.FK_Merop_Guri_Aktivnosti">
+            <End Role="Aktivnosti" EntitySet="Aktivnosti" />
+            <End Role="Merop_Guri" EntitySet="Merop_Guri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aktivnosti_Meropriyatiya_Meropriyatiya" Association="Self.FK_Aktivnosti_Meropriyatiya_Meropriyatiya">
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+            <End Role="Aktivnosti_Meropriyatiya" EntitySet="Aktivnosti_Meropriyatiya" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Merop_Guri_Meropriyatiya" Association="Self.FK_Merop_Guri_Meropriyatiya">
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+            <End Role="Merop_Guri" EntitySet="Merop_Guri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Merop_Guri_User" Association="Self.FK_Merop_Guri_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Merop_Guri" EntitySet="Merop_Guri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Pol" Association="Self.FK_User_Pol">
+            <End Role="Pol" EntitySet="Pol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PartyModelContainer" CdmEntityContainer="PartyEntities">
+          <EntitySetMapping Name="Aktivnosti">
+            <EntityTypeMapping TypeName="PartyModel.Aktivnosti">
+              <MappingFragment StoreEntitySet="Aktivnosti">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aktivnosti_Meropriyatiya">
+            <EntityTypeMapping TypeName="PartyModel.Aktivnosti_Meropriyatiya">
+              <MappingFragment StoreEntitySet="Aktivnosti_Meropriyatiya">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Aktivnosti" ColumnName="Id_Aktivnosti" />
+                <ScalarProperty Name="Id_Meropriyatiya" ColumnName="Id_Meropriyatiya" />
+                <ScalarProperty Name="Day_proved" ColumnName="Day_proved" />
+                <ScalarProperty Name="Time_nach" ColumnName="Time_nach" />
+                <ScalarProperty Name="Id_User_Moder" ColumnName="Id_User_Moder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Merop_Guri">
+            <EntityTypeMapping TypeName="PartyModel.Merop_Guri">
+              <MappingFragment StoreEntitySet="Merop_Guri">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Meropriyatiya" ColumnName="Id_Meropriyatiya" />
+                <ScalarProperty Name="Id_Aktivnosti" ColumnName="Id_Aktivnosti" />
+                <ScalarProperty Name="Id_User_Guri" ColumnName="Id_User_Guri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meropriyatiya">
+            <EntityTypeMapping TypeName="PartyModel.Meropriyatiya">
+              <MappingFragment StoreEntitySet="Meropriyatiya">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pol">
+            <EntityTypeMapping TypeName="PartyModel.Pol">
+              <MappingFragment StoreEntitySet="Pol">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="PartyModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="PartyModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Pol" ColumnName="Pol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

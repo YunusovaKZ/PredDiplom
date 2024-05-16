@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5f5a2b04e4fc43fb9380500fba1b79c7" Name="Diagram1">
+        <EntityTypeShape EntityType="PartyModel.Aktivnosti" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PartyModel.Aktivnosti_Meropriyatiya" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PartyModel.Merop_Guri" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PartyModel.Meropriyatiya" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="PartyModel.Pol" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PartyModel.Role" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PartyModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="PartyModel.FK_Aktivnosti_Meropriyatiya_Aktivnosti" ManuallyRouted="false" />
+        <AssociationConnector Association="PartyModel.FK_Merop_Guri_Aktivnosti" ManuallyRouted="false" />
+        <AssociationConnector Association="PartyModel.FK_Aktivnosti_Meropriyatiya_Meropriyatiya" ManuallyRouted="false" />
+        <AssociationConnector Association="PartyModel.FK_Merop_Guri_Meropriyatiya" ManuallyRouted="false" />
+        <AssociationConnector Association="PartyModel.FK_Merop_Guri_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PartyModel.FK_User_Pol" ManuallyRouted="false" />
+        <AssociationConnector Association="PartyModel.FK_User_Role" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
